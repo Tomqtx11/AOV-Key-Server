@@ -3,76 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AOV Key Server - Web Admin Panel</title>
-    <!-- Bootstrap 5 CSS & FontAwesome -->
+    <title>AOV Key Server - Web Admin Panel VIP</title>
+    <!-- Bootstrap 5 & FontAwesome & Google Fonts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-main: #0b0f19;
+            --card-bg: rgba(22, 30, 49, 0.85);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-green: #10b981;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+        }
+
         body {
-            background-color: #0f172a;
-            color: #e2e8f0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at top right, #1e1b4b, #0f172a 50%, #0b0f19);
+            color: var(--text-primary);
+            font-family: 'Plus Jakarta Sans', sans-serif;
             min-height: 100vh;
         }
-        .login-card {
-            background: #1e293b;
-            border: 1px solid #334155;
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
             border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
-        .panel-card {
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 12px;
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.8));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+
         .form-control, .form-select {
-            background-color: #0f172a;
-            border: 1px solid #334155;
-            color: #f8fafc;
+            background-color: rgba(15, 23, 42, 0.9) !important;
+            border: 1px solid #334155 !important;
+            color: #f8fafc !important;
+            border-radius: 10px;
+            padding: 0.65rem 1rem;
         }
         .form-control:focus, .form-select:focus {
-            background-color: #0f172a;
-            border-color: #3b82f6;
-            color: #f8fafc;
-            box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.25);
+            border-color: #6366f1 !important;
+            box-shadow: 0 0 0 0.25rem rgba(99, 102, 241, 0.25) !important;
         }
+
         .table-dark {
-            --bs-table-bg: #1e293b;
-            --bs-table-border-color: #334155;
+            --bs-table-bg: transparent;
+            --bs-table-border-color: rgba(255, 255, 255, 0.08);
         }
-        .badge-active { background-color: #10b981; }
-        .badge-blocked { background-color: #ef4444; }
-        .badge-expired { background-color: #f59e0b; }
+        .table-dark th {
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .badge-active { background: linear-gradient(135deg, #059669, #10b981); color: #fff; }
+        .badge-blocked { background: linear-gradient(135deg, #dc2626, #ef4444); color: #fff; }
+        .badge-expired { background: linear-gradient(135deg, #d97706, #f59e0b); color: #fff; }
+
+        .btn-gradient-primary {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .btn-gradient-primary:hover {
+            background: linear-gradient(135deg, #4338ca, #4f46e5);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-gradient-success {
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+        .btn-gradient-success:hover {
+            background: linear-gradient(135deg, #047857, #059669);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
     </style>
 </head>
 <body>
 
     <!-- MÀN HÌNH ĐĂNG NHẬP -->
     <div id="loginSection" class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-        <div class="card login-card p-4 style-card" style="width: 100%; max-width: 420px;">
+        <div class="card glass-card p-4 style-card" style="width: 100%; max-width: 440px;">
             <div class="text-center mb-4">
-                <i class="fa-solid fa-shield-halved fa-3x text-primary mb-2"></i>
-                <h4 class="fw-bold">AOV KEY ADMIN PANEL</h4>
-                <p class="text-muted small">Đăng nhập để quản lý hệ thống Server Key</p>
+                <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-20 text-primary rounded-circle mb-3" style="width: 64px; height: 64px;">
+                    <i class="fa-solid fa-shield-cat fa-2x"></i>
+                </div>
+                <h4 class="fw-bold mb-1 text-white">AOV KEY ADMIN PANEL</h4>
+                <p class="text-secondary small mb-0">Đăng nhập hệ thống quản lý Key Server VIP</p>
             </div>
-            <div id="loginAlert" class="alert alert-danger d-none" role="alert"></div>
+            <div id="loginAlert" class="alert alert-danger d-none rounded-3 py-2 small" role="alert"></div>
             <form id="loginForm">
                 <div class="mb-3">
-                    <label class="form-label text-muted small"><i class="fa-solid fa-user me-1"></i>Tài khoản</label>
-                    <input type="text" id="usernameInput" class="form-control" placeholder="Nhập tài khoản admin..." required>
+                    <label class="form-label text-secondary small fw-semibold"><i class="fa-solid fa-user me-1"></i>Tài khoản Admin</label>
+                    <input type="text" id="usernameInput" class="form-control" placeholder="Nhập tài khoản..." required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label text-muted small"><i class="fa-solid fa-key me-1"></i>Mật khẩu</label>
+                    <label class="form-label text-secondary small fw-semibold"><i class="fa-solid fa-lock me-1"></i>Mật khẩu</label>
                     <input type="password" id="passwordInput" class="form-control" placeholder="Nhập mật khẩu..." required>
                 </div>
                 <div class="form-check mb-4">
                     <input class="form-check-input" type="checkbox" id="rememberMe" checked>
-                    <label class="form-check-label text-muted small" for="rememberMe">
+                    <label class="form-check-label text-secondary small" for="rememberMe">
                         Ghi nhớ đăng nhập (30 ngày)
                     </label>
                 </div>
-                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">
-                    <i class="fa-solid fa-right-to-bracket me-2"></i> Đăng Nhập
+                <button type="submit" class="btn btn-gradient-primary w-100 py-2 fs-6">
+                    <i class="fa-solid fa-right-to-bracket me-2"></i> Đăng Nhập System
                 </button>
             </form>
         </div>
@@ -80,13 +141,18 @@
 
     <!-- MÀN HÌNH QUẢN LÝ (MAIN DASHBOARD) -->
     <div id="mainDashboard" class="container py-4 d-none">
-        <header class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary">
-            <div>
-                <h3 class="fw-bold mb-0 text-primary"><i class="fa-solid fa-shield-halved me-2"></i>AOV KEY SERVER ADMIN</h3>
-                <small class="text-muted">Repository: Tomqtx11/AOV-Key-Server</small>
+        <header class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary border-opacity-25">
+            <div class="d-flex align-items-center gap-3">
+                <div class="bg-primary bg-opacity-20 p-2 rounded-3 text-primary">
+                    <i class="fa-solid fa-shield-cat fa-2x"></i>
+                </div>
+                <div>
+                    <h3 class="fw-bold mb-0 text-white">AOV KEY SERVER ADMIN</h3>
+                    <span class="badge bg-secondary bg-opacity-50 text-light fw-normal"><i class="fa-brands fa-github me-1"></i>Tomqtx11/AOV-Key-Server</span>
+                </div>
             </div>
             <div>
-                <button class="btn btn-outline-danger btn-sm" onclick="logout()">
+                <button class="btn btn-outline-danger btn-sm rounded-3 px-3" onclick="logout()">
                     <i class="fa-solid fa-power-off me-1"></i> Đăng xuất
                 </button>
             </div>
@@ -95,44 +161,64 @@
         <!-- THỐNG KÊ -->
         <div class="row g-3 mb-4">
             <div class="col-md-3">
-                <div class="panel-card p-3 text-center">
-                    <h6 class="text-muted mb-1">Tổng Số Key</h6>
-                    <h3 id="statTotal" class="fw-bold text-info">0</h3>
+                <div class="stat-card p-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="text-secondary small fw-semibold">Tổng Số Key</span>
+                            <h3 id="statTotal" class="fw-bold text-white mb-0 mt-1">0</h3>
+                        </div>
+                        <i class="fa-solid fa-key fa-2x text-primary opacity-50"></i>
+                    </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="panel-card p-3 text-center">
-                    <h6 class="text-muted mb-1">Đang Hoạt Động</h6>
-                    <h3 id="statActive" class="fw-bold text-success">0</h3>
+                <div class="stat-card p-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="text-secondary small fw-semibold">Đang Hoạt Động</span>
+                            <h3 id="statActive" class="fw-bold text-emerald mb-0 mt-1" style="color: #10b981;">0</h3>
+                        </div>
+                        <i class="fa-solid fa-circle-check fa-2x text-success opacity-50"></i>
+                    </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="panel-card p-3 text-center">
-                    <h6 class="text-muted mb-1">Bị Khóa</h6>
-                    <h3 id="statBlocked" class="fw-bold text-danger">0</h3>
+                <div class="stat-card p-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="text-secondary small fw-semibold">Bị Khóa</span>
+                            <h3 id="statBlocked" class="fw-bold text-danger mb-0 mt-1">0</h3>
+                        </div>
+                        <i class="fa-solid fa-ban fa-2x text-danger opacity-50"></i>
+                    </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="panel-card p-3 text-center">
-                    <h6 class="text-muted mb-1">Đã Hết Hạn</h6>
-                    <h3 id="statExpired" class="fw-bold text-warning">0</h3>
+                <div class="stat-card p-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="text-secondary small fw-semibold">Đã Hết Hạn</span>
+                            <h3 id="statExpired" class="fw-bold text-warning mb-0 mt-1">0</h3>
+                        </div>
+                        <i class="fa-solid fa-clock-rotate-left fa-2x text-warning opacity-50"></i>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- THANH CÔNG CỤ -->
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <button class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#createKeyModal">
-                <i class="fa-solid fa-plus me-1"></i> Tạo Key VIP Mới
+            <button class="btn btn-gradient-success px-3 py-2" data-bs-toggle="modal" data-bs-target="#createKeyModal">
+                <i class="fa-solid fa-plus me-1"></i> Tạo Key VIP (Tĩnh / Động)
             </button>
             <div class="d-flex gap-2">
-                <input type="text" id="searchInput" class="form-control" style="width: 250px;" placeholder="Tìm kiếm Key, Ghi chú..." onkeyup="filterTable()">
-                <button class="btn btn-outline-light" onclick="loadKeysFromGitHub()"><i class="fa-solid fa-rotate me-1"></i> Làm mới</button>
+                <input type="text" id="searchInput" class="form-control" style="width: 280px;" placeholder="🔍 Tìm theo Key, Ghi chú, UDID..." onkeyup="filterTable()">
+                <button class="btn btn-outline-light rounded-3" onclick="loadKeysFromGitHub()"><i class="fa-solid fa-rotate me-1"></i> Làm mới</button>
             </div>
         </div>
 
         <!-- BẢNG DANH SÁCH KEY -->
-        <div class="panel-card p-3">
+        <div class="glass-card p-3">
             <div class="table-responsive">
                 <table class="table table-dark table-hover align-middle mb-0">
                     <thead>
@@ -140,13 +226,14 @@
                             <th>Key Code</th>
                             <th>Trạng Thái</th>
                             <th>Hạn Sử Dụng</th>
-                            <th>UDID Khóa Máy</th>
+                            <th>Số Máy Giới Hạn</th>
+                            <th>UDID Máy Đã Gắn</th>
                             <th>Ghi Chú</th>
                             <th class="text-end">Thao Tác</th>
                         </tr>
                     </thead>
                     <tbody id="keysTableBody">
-                        <tr><td colspan="6" class="text-center py-4 text-muted">Đang tải dữ liệu từ GitHub Server...</td></tr>
+                        <tr><td colspan="7" class="text-center py-4 text-secondary"><i class="fa-solid fa-spinner fa-spin me-2"></i>Đang nạp dữ liệu Server...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -156,36 +243,59 @@
     <!-- MODAL TẠO KEY -->
     <div class="modal fade" id="createKeyModal" tabindex="-1">
         <div class="modal-dialog">
-            <div class="modal-content style-card bg-dark text-light border-secondary">
-                <div class="modal-header border-secondary">
-                    <h5 class="modal-title fw-bold"><i class="fa-solid fa-key me-2 text-success"></i>Tạo Key VIP Mới</h5>
+            <div class="modal-content glass-card border-secondary text-light">
+                <div class="modal-header border-secondary border-opacity-25">
+                    <h5 class="modal-title fw-bold text-white"><i class="fa-solid fa-key me-2 text-success"></i>Tạo Key VIP Mới</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
+                    <!-- LOẠI KEY: TĨNH HOẶC ĐỘNG -->
                     <div class="mb-3">
-                        <label class="form-label text-muted small">Tên Key (Để trống sẽ tự sinh ngẫu nhiên)</label>
-                        <input type="text" id="newKeyCode" class="form-control" placeholder="Ví dụ: VIP-BANBE-1234">
+                        <label class="form-label text-secondary small fw-semibold">Loại Key</label>
+                        <div class="d-flex gap-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="keyTypeRadio" id="keyTypeDynamic" value="dynamic" checked onchange="toggleKeyTypeInput()">
+                                <label class="form-check-label text-light" for="keyTypeDynamic">Key Động (Ngẫu nhiên)</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="keyTypeRadio" id="keyTypeStatic" value="static" onchange="toggleKeyTypeInput()">
+                                <label class="form-check-label text-light" for="keyTypeStatic">Key Tĩnh (Tự đặt tên)</label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label text-muted small">Thời Hạn Sử Dụng</label>
-                        <select id="newKeyDuration" class="form-select">
-                            <option value="1">1 Ngày (24h)</option>
-                            <option value="7">7 Ngày (1 Tuần)</option>
-                            <option value="30" selected>30 Ngày (1 Tháng)</option>
-                            <option value="90">90 Ngày (3 Tháng)</option>
-                            <option value="365">365 Ngày (1 Năm)</option>
-                            <option value="9999">Vĩnh Viễn (9999 Ngày)</option>
-                        </select>
+
+                    <div class="mb-3 d-none" id="staticKeyBox">
+                        <label class="form-label text-secondary small fw-semibold">Tên Key Tĩnh</label>
+                        <input type="text" id="newKeyCode" class="form-control" placeholder="Ví dụ: VIPCUONG11, KEYCHODANH88">
                     </div>
+
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label text-secondary small fw-semibold">Thời Hạn Sử Dụng</label>
+                            <select id="newKeyDuration" class="form-select">
+                                <option value="1">1 Ngày (24h)</option>
+                                <option value="7">7 Ngày (1 Tuần)</option>
+                                <option value="30" selected>30 Ngày (1 Tháng)</option>
+                                <option value="90">90 Ngày (3 Tháng)</option>
+                                <option value="365">365 Ngày (1 Năm)</option>
+                                <option value="9999">Vĩnh Viễn (9999 Ngày)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-secondary small fw-semibold">Số Thiết Bị Cho Phép</label>
+                            <input type="number" id="newKeyMaxDevices" class="form-control" value="1" min="1" max="999" placeholder="Số lượng máy (VD: 1, 2, 5...)">
+                        </div>
+                    </div>
+
                     <div class="mb-3">
-                        <label class="form-label text-muted small">Ghi Chú Người Dùng</label>
-                        <input type="text" id="newKeyNote" class="form-control" placeholder="Ví dụ: Khách VIP Anh Nam">
+                        <label class="form-label text-secondary small fw-semibold">Ghi Chú Người Dùng</label>
+                        <input type="text" id="newKeyNote" class="form-control" placeholder="Ví dụ: Khách VIP Anh Nam (Dùng 2 máy)">
                     </div>
                 </div>
-                <div class="modal-footer border-secondary">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-success fw-bold" onclick="submitCreateKey()">
-                        <i class="fa-solid fa-check me-1"></i> Tạo & Đẩy Server
+                <div class="modal-footer border-secondary border-opacity-25">
+                    <button type="button" class="btn btn-secondary rounded-3" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-gradient-success" onclick="submitCreateKey()">
+                        <i class="fa-solid fa-check me-1"></i> Tạo & Lưu Server
                     </button>
                 </div>
             </div>
@@ -195,7 +305,6 @@
     <!-- Bootstrap & JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Token ghép động tránh GitHub Secret Scanner block commit
         const T_PART1 = "ghp_cJqzhvLNwMh2w0E47JVE";
         const T_PART2 = "uBqPar8ZmW1oUnpq";
         const GITHUB_TOKEN = T_PART1 + T_PART2;
@@ -206,7 +315,6 @@
         let currentKeysData = { server_status: "online", keys: {} };
         let currentSha = "";
 
-        // Tự động kiểm tra Đăng Nhập
         window.onload = function() {
             const savedSession = localStorage.getItem("adminSession") || sessionStorage.getItem("adminSession");
             if (savedSession) {
@@ -221,7 +329,13 @@
             showLogin();
         };
 
-        // Form Login Handler
+        function toggleKeyTypeInput() {
+            const isStatic = document.getElementById("keyTypeStatic").checked;
+            const box = document.getElementById("staticKeyBox");
+            if (isStatic) box.classList.remove("d-none");
+            else box.classList.add("d-none");
+        }
+
         document.getElementById("loginForm").onsubmit = function(e) {
             e.preventDefault();
             const user = document.getElementById("usernameInput").value.trim();
@@ -230,7 +344,7 @@
 
             if (user === ADMIN_USER && pass === ADMIN_PASS) {
                 if (remember) {
-                    const expiry = new Date().getTime() + (30 * 24 * 60 * 60 * 1000); // 30 Ngày
+                    const expiry = new Date().getTime() + (30 * 24 * 60 * 60 * 1000);
                     localStorage.setItem("adminSession", JSON.stringify({ user, expiry }));
                 } else {
                     sessionStorage.setItem("adminSession", JSON.stringify({ user }));
@@ -260,10 +374,9 @@
             showLogin();
         }
 
-        // Đọc dữ liệu keys.json từ GitHub REST API
         async function loadKeysFromGitHub() {
             const tbody = document.getElementById("keysTableBody");
-            tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-muted"><i class="fa-solid fa-spinner fa-spin me-2"></i>Đang tải dữ liệu từ GitHub Server...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-secondary"><i class="fa-solid fa-spinner fa-spin me-2"></i>Đang nạp dữ liệu Server...</td></tr>';
             
             try {
                 const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/keys.json?t=${new Date().getTime()}`, {
@@ -275,11 +388,10 @@
                 currentKeysData = JSON.parse(jsonContent);
                 renderTable();
             } catch (err) {
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center text-danger py-4"><i class="fa-solid fa-triangle-exclamation me-2"></i>Lỗi tải Server: ${err.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center text-danger py-4"><i class="fa-solid fa-triangle-exclamation me-2"></i>Lỗi tải Server: ${err.message}</td></tr>`;
             }
         }
 
-        // Đẩy dữ liệu keys.json lên GitHub
         async function saveKeysToGitHub(commitMsg) {
             try {
                 const contentStr = JSON.stringify(currentKeysData, null, 2);
@@ -303,14 +415,13 @@
                     currentSha = data.content.sha;
                     loadKeysFromGitHub();
                 } else {
-                    alert("Lỗi khi đẩy lên GitHub!");
+                    alert("Lỗi khi đẩy lên GitHub Server!");
                 }
             } catch (err) {
                 alert("Lỗi kết nối GitHub API: " + err.message);
             }
         }
 
-        // Hiển thị bảng
         function renderTable() {
             const tbody = document.getElementById("keysTableBody");
             const keys = currentKeysData.keys || {};
@@ -333,18 +444,30 @@
                     active++;
                 }
 
+                const maxDev = info.max_devices || 1;
+                const boundList = info.bound_udids || (info.bound_udid ? [info.bound_udid] : []);
+                const usedCount = boundList.length;
+
+                let udidDisplay = "";
+                if (usedCount === 0) {
+                    udidDisplay = '<span class="text-secondary small">Chưa gắn máy nào</span>';
+                } else {
+                    udidDisplay = boundList.map(u => `<code class="d-block small text-light">${u}</code>`).join('');
+                }
+
                 html += `
                     <tr>
-                        <td class="fw-bold text-info">${key}</td>
+                        <td class="fw-bold text-info fs-6">${key}</td>
                         <td>${statusBadge}</td>
-                        <td><small>${info.expiry}</small></td>
-                        <td><code>${info.bound_udid || 'Chưa gắn UDID'}</code></td>
-                        <td>${info.note || ''}</td>
+                        <td><small class="text-light">${info.expiry}</small></td>
+                        <td><span class="badge bg-primary bg-opacity-20 text-primary border border-primary border-opacity-25 fs-6">${usedCount} / ${maxDev} máy</span></td>
+                        <td>${udidDisplay}</td>
+                        <td><span class="text-secondary small">${info.note || ''}</span></td>
                         <td class="text-end">
                             <button class="btn btn-sm btn-outline-warning me-1" title="Khóa / Mở Khóa" onclick="toggleBlock('${key}')">
                                 <i class="fa-solid fa-ban"></i>
                             </button>
-                            <button class="btn btn-sm btn-outline-info me-1" title="Reset UDID Máy" onclick="resetUdid('${key}')">
+                            <button class="btn btn-sm btn-outline-info me-1" title="Reset UDID Tất Cả Máy" onclick="resetUdid('${key}')">
                                 <i class="fa-solid fa-rotate-left"></i>
                             </button>
                             <button class="btn btn-sm btn-outline-danger" title="Xóa Key" onclick="deleteKey('${key}')">
@@ -360,14 +483,20 @@
             document.getElementById("statBlocked").innerText = blocked;
             document.getElementById("statExpired").innerText = expired;
 
-            tbody.innerHTML = html || '<tr><td colspan="6" class="text-center py-4 text-muted">Chưa có Key nào</td></tr>';
+            tbody.innerHTML = html || '<tr><td colspan="7" class="text-center py-4 text-secondary">Chưa có Key nào</td></tr>';
         }
 
-        // Tạo Key mới
         function submitCreateKey() {
+            const isStatic = document.getElementById("keyTypeStatic").checked;
             let keyStr = document.getElementById("newKeyCode").value.trim();
             const duration = parseInt(document.getElementById("newKeyDuration").value);
+            const maxDevices = parseInt(document.getElementById("newKeyMaxDevices").value) || 1;
             const note = document.getElementById("newKeyNote").value.trim();
+
+            if (isStatic && !keyStr) {
+                alert("Vui lòng nhập tên cho Key Tĩnh!");
+                return;
+            }
 
             if (!keyStr) {
                 const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -387,7 +516,8 @@
                 status: "active",
                 expiry: expStr,
                 created_at: new Date().toISOString().replace('T', ' ').substring(0, 19),
-                bound_udid: "",
+                max_devices: maxDevices,
+                bound_udids: [],
                 note: note || "VIP User"
             };
 
@@ -396,28 +526,27 @@
             saveKeysToGitHub(`Create key ${keyStr}`);
         }
 
-        // Khóa / Mở Khóa
         function toggleBlock(key) {
             const curr = currentKeysData.keys[key].status || "active";
             currentKeysData.keys[key].status = (curr === "active") ? "blocked" : "active";
             saveKeysToGitHub(`Toggle status for ${key}`);
         }
 
-        // Reset UDID
         function resetUdid(key) {
-            currentKeysData.keys[key].bound_udid = "";
-            saveKeysToGitHub(`Reset UDID for ${key}`);
+            if (confirm(`Reset tất cả thiết bị đã gắn cho Key: ${key}?`)) {
+                currentKeysData.keys[key].bound_udids = [];
+                currentKeysData.keys[key].bound_udid = "";
+                saveKeysToGitHub(`Reset UDID for ${key}`);
+            }
         }
 
-        // Xóa Key
         function deleteKey(key) {
-            if (confirm(`Bạn có chắc chắn muốn xóa Key: ${key}?`)) {
+            if (confirm(`Xóa vĩnh viễn Key: ${key}?`)) {
                 delete currentKeysData.keys[key];
                 saveKeysToGitHub(`Delete key ${key}`);
             }
         }
 
-        // Lọc bảng
         function filterTable() {
             const filter = document.getElementById("searchInput").value.toUpperCase();
             const trs = document.getElementById("keysTableBody").getElementsByTagName("tr");
